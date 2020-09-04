@@ -109,17 +109,11 @@ public class Exercise{
            Therefor factorial(5) = 5*fact(4) = 5*4*fact(3) = 5*4*3*fact(2) = 5*4*3*2*1
            
            In other words:
-    
-        */
-        
+        */        
         if(n == 1)
             return 1;
 
         return n*factorial(n-1); 
-
-        
     }
-
-
 
 }
