@@ -1,16 +1,31 @@
 import java.lang.Math; 
 import java.util.*;
+import java.util.Timer;
+
 
 public class Exercise{
-
+    static int MAX_SIZE = 1000000; 
+    static int totalt;  
+    // To store all prime numbers 
+    static ArrayList<Integer> primes = 
+       new ArrayList<Integer>(); 
+      
     public static void main(String[] args){
 
     // The exercise-methods you want to run:
-
+     //first make a list containing all the uneven numbers up to n (since the even numbers are not prime):
+        // int number = 1000000;
+        // List<Integer> numbers = new ArrayList<Integer>();
+        // numbers.add(2);
+        // for(int i = 3; i<=number; i=i+2){
+        //     numbers.add(i);
+        // }
      
-        printAllPerfectNumbersSmallerThan(1000000);
-
-    
+         //System.out.println(sieveEratosthenes(1000000).size());
+         final long startTime = System.currentTimeMillis();
+            realSieve();
+         final long endTime = System.currentTimeMillis();
+            System.out.println(primes.size() + " primes found in "+(endTime-startTime) +" miliseconds "+" with calcs: "+totalt);
     }
 
     // Exer 2.1: 
@@ -238,12 +253,99 @@ public class Exercise{
         }
     }
 
-    /*  Exer 2.15
-        Find all prim numbers lower than n
-        For this, we will try to implement the ancient algorithm, Sieve of Eratosthenes, for finding all primes up to a given limit.
+    /* Exer 2.15
+       Check if n is a prime.
+     */
+     public static boolean isPrime(int n){
 
+         if(n<2)
+            return false;
+
+         if(n == 2)
+            return true;
+         
+         if(n%2 == 0){
+             return false;
+         }
+         for(int i = 3; i < Math.sqrt(n)+1; i++){
+             if(n%i == 0)
+                {
+                    
+                    return false;
+                }
+                
+         }
+         return true;
+     }
+
+    /*  Exer 2.16
+        Find count of primes under int n.
+        We run through all an check with isPrime. If true count++
+    */
+    public static int countPrimes(int n){
+
+        int primeCount = 0;
+        
+        for(int i = 1; i<n; i++){
+            if(isPrime(i))
+                primeCount++;
+        }
+
+        return primeCount;
+    }
+    /* Exer 2.16 extra
+        We will try to implement the ancient algorithm, Sieve of Eratosthenes, for finding all primes up to a given limit.
         It starts by eliminating all the numbers that are divisible by the first prime -> 2. There after elimination all numbers divisible by the second prime 3 and than 5 and so forth.
     */
+    public static List<Integer> sieveEratosthenes(List<Integer> numbers){
+    
+        int baseNum = 0;
+        int calc = 0;
+        while(baseNum < Math.sqrt(numbers.size())){
+            
+            for(int i = 1; i < numbers.size()-baseNum; i++){
+                
+                if(numbers.get(baseNum+i) % numbers.get(baseNum) == 0)
+                {
+                    numbers.remove(baseNum+i);
+                }
+                calc++;
+            }                        
+            baseNum++;
+        }
+        
+        System.out.println("Calcs: "+calc);
+        return numbers;
+    }
+     public static void realSieve()  
+    {  
+        boolean [] IsPrime = new boolean[MAX_SIZE];  
+          
+        for(int i = 0; i < MAX_SIZE; i++) 
+            IsPrime[i] = true; 
+          
+        for (int p = 2; p * p < MAX_SIZE; p++)  
+        {  
+            // If IsPrime[p] is not changed,  
+            // then it is a prime  
+            if (IsPrime[p] == true)  
+            {  
+                // Update all multiples of p greater than or  
+                // equal to the square of it  
+                // numbers which are multiple of p and are  
+                // less than p^2 are already been marked.  
+                for (int i = p * p; i < MAX_SIZE; i += p){  
+                    totalt++;
+                    IsPrime[i] = false;  
+                    }
+            }  
+        }  
+      
+        // Store all prime numbers  
+        for (int p = 2; p < MAX_SIZE; p++)  
+        if (IsPrime[p] == true)  
+                primes.add(p); 
+    }  
 
 
 }
