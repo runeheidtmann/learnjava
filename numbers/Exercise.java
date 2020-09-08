@@ -3,12 +3,7 @@ import java.util.*;
 import java.util.Timer;
 
 
-public class Exercise{
-    static int MAX_SIZE = 1000000; 
-    static int totalt;  
-    // To store all prime numbers 
-    static ArrayList<Integer> primes = 
-       new ArrayList<Integer>(); 
+public class Exercise{ 
       
     public static void main(String[] args){
 
@@ -301,15 +296,12 @@ public class Exercise{
     
         int baseNum = 0;
         int calc = 0;
-        while(baseNum < Math.sqrt(numbers.size())){
-            
+        while(baseNum < Math.sqrt(numbers.size())){            
             for(int i = 1; i < numbers.size()-baseNum; i++){
-                
                 if(numbers.get(baseNum+i) % numbers.get(baseNum) == 0)
                 {
                     numbers.remove(baseNum+i);
                 }
-                calc++;
             }                        
             baseNum++;
         }
@@ -317,8 +309,14 @@ public class Exercise{
         System.out.println("Calcs: "+calc);
         return numbers;
     }
-     public static void realSieve()  
+    public static void realSieve()  
     {  
+        int MAX_SIZE = 1000000; 
+        int totalt;  
+         // To store all prime numbers 
+        static ArrayList<Integer> primes = 
+        new ArrayList<Integer>();
+        
         boolean [] IsPrime = new boolean[MAX_SIZE];  
           
         for(int i = 0; i < MAX_SIZE; i++) 
@@ -344,7 +342,8 @@ public class Exercise{
         // Store all prime numbers  
         for (int p = 2; p < MAX_SIZE; p++)  
         if (IsPrime[p] == true)  
-                primes.add(p); 
+                primes.add(p);
+        System.out.println(primes);
     }  
 
 
